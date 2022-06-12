@@ -9,17 +9,17 @@ import co.zael.todo.business.core.repository.UserRepository;
 import co.zael.todo.system.exception.BaseBusinessException;
 
 @Service
-public class UserService {
+public class UserService  {
 
 	  @Autowired 
 	  private UserRepository userRepository;
 	  
 	  
-	  public Iterable<User> getAllUsers(){
+	  public Iterable<User> getAll(){
 		  return userRepository.findAll();
 	  }
 	  
-	  public User saveUser(User user) {
+	  public User save(User user) {
 		  
 	    userRepository.save(user);
 	    return user;
@@ -27,7 +27,7 @@ public class UserService {
 	  }
 	  
 	  
-	  public User getUserById(String id) throws BaseBusinessException {
+	  public User getById(String id) throws BaseBusinessException {
 		  
 		  int integerId = -1;
 		  User user = null;

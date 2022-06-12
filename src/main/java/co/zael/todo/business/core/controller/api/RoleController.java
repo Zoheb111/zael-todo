@@ -11,27 +11,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import co.zael.todo.business.core.entity.User;
-import co.zael.todo.business.core.service.UserService;
+import co.zael.todo.business.core.entity.Role;
+import co.zael.todo.business.core.entity.projection.RoleProfile;
+import co.zael.todo.business.core.service.RoleService;
 import co.zael.todo.system.annotation.LogRequestResponse;
 import co.zael.todo.system.exception.BaseBusinessException;
 import co.zael.todo.system.response.StandardPagedResponse;
 import co.zael.todo.system.response.StandardResponse;
 
 @Controller 
-@RequestMapping(path="/users") 
-public class UserController {
+@RequestMapping(path="/roles") 
+public class RoleController {
 	
   @Autowired
-  private UserService userService;
+  private RoleService roleService;
   
   @LogRequestResponse
   @GetMapping(path="")
   @ResponseBody
-  public ResponseEntity<StandardPagedResponse<Iterable<User>>> getAllUsers() throws BaseBusinessException {
+  public ResponseEntity<StandardPagedResponse<Iterable<RoleProfile>>> getAllUsers() throws BaseBusinessException {
 	
 		HttpStatus httpStatus = HttpStatus.OK;
-		StandardPagedResponse<Iterable<User>> response = new StandardPagedResponse<Iterable<User>>(httpStatus, userService.getAll(), "0000", "Users retrieved");
+		StandardPagedResponse<Iterable<RoleProfile>> response = new StandardPagedResponse<Iterable<RoleProfile>>(httpStatus, roleService.getAll(), "0000", "Roles retrieved");
 		return new ResponseEntity<>(response, httpStatus);  
 
   }
@@ -39,10 +40,10 @@ public class UserController {
   @LogRequestResponse
   @GetMapping(path="/{id}") 
   @ResponseBody
-  public ResponseEntity<StandardResponse<User>> getUserById(@PathVariable String id) throws Exception {
+  public ResponseEntity<StandardResponse<RoleProfile>> getUserById(@PathVariable String id) throws Exception {
 	  
 	HttpStatus httpStatus = HttpStatus.OK;
-	StandardResponse<User> response = new StandardResponse<User>(httpStatus, userService.getById(id), "0000", "User retrieved");
+	StandardResponse<RoleProfile> response = new StandardResponse<RoleProfile>(httpStatus, roleService.getById(id), "0000", "Role retrieved");
 	return new ResponseEntity<>(response, httpStatus);  
 
   }
@@ -50,10 +51,10 @@ public class UserController {
   @LogRequestResponse
   @PostMapping(path="") 
   @ResponseBody
-  public ResponseEntity<StandardResponse<User>> addNewUser (@RequestBody User user) throws BaseBusinessException {
+  public ResponseEntity<StandardResponse<Role>> addNewUser (@RequestBody Role role) throws BaseBusinessException {
     
 		HttpStatus httpStatus = HttpStatus.CREATED;
-		StandardResponse<User> response = new StandardResponse<User>(httpStatus, userService.save(user), "0000", "User created");
+		StandardResponse<Role> response = new StandardResponse<Role>(httpStatus, roleService.save(role), "0000", "Role created");
 		return new ResponseEntity<>(response, httpStatus);
   }
 

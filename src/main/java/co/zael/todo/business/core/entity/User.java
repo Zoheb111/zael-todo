@@ -1,11 +1,15 @@
 package co.zael.todo.business.core.entity;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class User {
@@ -26,6 +30,10 @@ public class User {
 	private Date updatedDate;
 
 	private Integer updatedBy;
+	
+	@ManyToMany
+	@JoinTable(name = "role_user_map", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles;
 
 	public Integer getId() {
 		return id;
@@ -99,11 +107,20 @@ public class User {
 		this.updatedBy = updatedBy;
 	}
 
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", fullName=" + fullName + ", tenantId=" + tenantId
 				+ ", createdDate=" + createdDate + ", createdBy=" + createdBy + ", updatedDate=" + updatedDate
-				+ ", updatedBy=" + updatedBy + "]";
+				+ ", updatedBy=" + updatedBy + ", roles=" + roles + "]";
 	}
+
 
 }
